@@ -1,0 +1,11 @@
+/* Oddiy holatda chegara rangini o'rnatish */
+.custom-select .ant-select-selector {
+  border-color: rgba(
+    128,
+    128,
+    128,
+    0.404
+  ) !important; /* Oddiy holatda chegara rangini kul rangga o'rnatish */
+  box-shadow: none !important; /* Fokus soyasini olib tashlash */
+  transition: all 0.3s ease; /* O'tish animatsiyasi */
+}

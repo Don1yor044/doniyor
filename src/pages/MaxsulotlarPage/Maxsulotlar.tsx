@@ -32,6 +32,7 @@ import { css } from "@emotion/react";
 const { Option } = Select;
 
 export function Maxsulotlar() {
+  const [categData, setCategData] = useState([]);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -43,7 +44,22 @@ export function Maxsulotlar() {
 
   useEffect(() => {
     fetchProducts();
+    fetchCategories();
   }, []);
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(
+        "https://46d4deb0e08aaad2.mokky.dev/Kategoriyalar"
+      );
+      setCategData(response.data);
+      setLoading(false);
+    } catch (error) {
+      message.error("Failed to fetch products.");
+      setLoading(false);
+    }
+  };
+
   const fetchProducts = async () => {
     try {
       const response = await axios.get(
@@ -61,7 +77,7 @@ export function Maxsulotlar() {
   useEffect(() => {
     if (selectedCategory) {
       setFilteredData(
-        data.filter((item: any) => item.kategoriyalar === selectedCategory)
+        data.filter((item: any) => item.categoryId === selectedCategory)
       );
     } else {
       setFilteredData(data);
@@ -111,6 +127,7 @@ export function Maxsulotlar() {
   const [open, setOpen] = useState(false);
 
   const showDrawer = () => {
+    form.resetFields();
     setOpen(true);
     navigate(`${location.pathname}?action=add`);
   };
@@ -129,7 +146,7 @@ export function Maxsulotlar() {
 
     const data = {
       name: values.name,
-      kategoriyalar: values.kategoriyalar,
+      categoryId: values.categoryId,
       price: values.price,
       qoshimcha: values.qoshimcha,
       photo: values.photo ? values.photo.file.path : null,
@@ -159,7 +176,7 @@ export function Maxsulotlar() {
         );
         console.log("Created:", response.data);
       }
-      await fetchProducts(); // Ma'lumotlarni yangilash
+      await fetchProducts();
       form.resetFields(); // Formani tozalash
       setOpen(false); // Drawerni yopish
     } catch (error) {
@@ -201,28 +218,33 @@ export function Maxsulotlar() {
             marginLeft: 3,
             display: "flex",
             alignItems: "center",
-            justifyContent: "center",
             gap: 8,
             background: "white",
             width: "230px",
           }}
         >
-          <Button
-            style={{
-              border: "none",
-              outline: "none",
-              boxShadow: "none",
-              padding: 0,
-            }}
-            onClick={showDrawer}
+          <div
+            style={{ width: "60px", display: "flex", justifyContent: "end" }}
           >
-            <AiFillPlusCircle
-              style={{ fontSize: 33, background: "white", color: "#20D472" }}
-            />
-          </Button>
-          <Typography style={{ fontSize: 12, fontWeight: 600 }}>
-            Yangi maxsulot <br /> qo’shish
-          </Typography>
+            <Button
+              style={{
+                border: "none",
+                outline: "none",
+                boxShadow: "none",
+                padding: 0,
+              }}
+              onClick={showDrawer}
+            >
+              <AiFillPlusCircle
+                style={{ fontSize: 33, background: "white", color: "#20D472" }}
+              />
+            </Button>
+          </div>
+          <div>
+            <Typography style={{ fontSize: 13, fontWeight: 600 }}>
+              Yangi maxsulot <br /> qo’shish
+            </Typography>
+          </div>
         </div>
         <div
           style={{
@@ -306,10 +328,12 @@ export function Maxsulotlar() {
                 placeholder="Select a category"
                 bordered={false}
               >
-                <Option value="">All Kategories</Option>
-                <Option value="Lavash">Lavash</Option>
-                <Option value="Burger">Burger</Option>
-                <Option value="Ichimlik">Ichimlik</Option>
+                <Option value="">All Categories</Option>
+                {categData.map((category: any) => (
+                  <Option key={category.id} value={category.id}>
+                    {category.nameUz}
+                  </Option>
+                ))}
               </Select>
             </Modal>
           </div>
@@ -414,7 +438,10 @@ export function Maxsulotlar() {
                           font-weight: 500;
                         `}
                       >
-                        {f.kategoriyalar ? f.kategoriyalar : "-"}
+                        {
+                          //@ts-ignore
+                          categData.find((i) => i.id === f.categoryId)?.nameUz
+                        }
                       </Typography>
                     </div>
 
@@ -506,16 +533,18 @@ export function Maxsulotlar() {
 
             <Col span={24}>
               <Form.Item
-                name="kategoriyalar"
-                label="Kategoriyalar"
+                name="categoryId"
+                label="Category"
                 rules={[
-                  { required: true, message: "Iltimos kategorya tanlang !" },
+                  { required: true, message: "Please select a category!" },
                 ]}
               >
-                <Select placeholder="Iltimos kategorya tanlang !">
-                  <Option value="Lavash">Lavash</Option>
-                  <Option value="Burger">Burger</Option>
-                  <Option value="Ichimlik">Ichimlik</Option>
+                <Select placeholder="Select a category">
+                  {categData.map((cat: any) => (
+                    <Option key={cat.id} value={cat.id}>
+                      {cat.nameUz}
+                    </Option>
+                  ))}
                 </Select>
               </Form.Item>
             </Col>

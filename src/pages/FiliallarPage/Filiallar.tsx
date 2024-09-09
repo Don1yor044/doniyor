@@ -25,6 +25,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import moment from "moment";
 import { useLocation, useNavigate } from "react-router-dom";
 import { css } from "@emotion/react";
+import { LeafletMap } from "./addMap/addMap";
 
 export function Filiallar() {
   const [data, setData] = useState([]);
@@ -35,8 +36,10 @@ export function Filiallar() {
   const [currentItem, setCurrentItem] = useState<any>(null);
   const navigate = useNavigate();
   const location = useLocation();
+  const [position, setPosition] = useState([41.2995, 69.2401]);
 
-  // Apidan malumot olish
+  const [form] = Form.useForm();
+
   useEffect(() => {
     fetchProducts();
   }, []);
@@ -45,8 +48,8 @@ export function Filiallar() {
       const response = await axios.get(
         "https://46d4deb0e08aaad2.mokky.dev/Filiallar"
       );
-      setData(response.data);
       setLoading(false);
+      setData(response.data);
     } catch (error) {
       message.error("Failed to fetch filial.");
       setLoading(false);
@@ -54,17 +57,14 @@ export function Filiallar() {
   };
 
   //  search
-  const handleSearch = (e: any) => {
-    const value = e.target.value;
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
     setSearchText(value);
-    if (value) {
-      const search = data.filter((item: any) =>
-        item.nameUz.toLowerCase().includes(value.toLowerCase())
-      );
-      setFilteredData(search);
-    } else {
-      setFilteredData(data); // Bo'sh qidiruv maydoni uchun butun data
-    }
+
+    const filtered = data.filter((item: any) =>
+      item.nameUz.toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredData(filtered);
   };
   useEffect(() => {
     setFilteredData(data);
@@ -102,7 +102,6 @@ export function Filiallar() {
   };
 
   // add Drowe and edit
-  const [form] = Form.useForm();
   const onFinish = async (values: any) => {
     console.log(values.photo);
 
@@ -110,6 +109,7 @@ export function Filiallar() {
       nameUz: values.nameUz,
       nameRu: values.nameRu,
       moljal: values.moljal,
+      address: values.address,
       ishVaqtiB: values.ishVaqtiB ? values.ishVaqtiB.format("HH:mm") : null,
       ishVaqtiT: values.ishVaqtiT ? values.ishVaqtiT.format("HH:mm") : null,
     };
@@ -151,21 +151,29 @@ export function Filiallar() {
   // edit Drower
 
   const onEdit = (item: any) => {
+    // Set form fields including time and address
     form.setFieldsValue({
       ...item,
       ishVaqtiB: item.ishVaqtiB ? moment(item.ishVaqtiB, "HH:mm") : null,
       ishVaqtiT: item.ishVaqtiT ? moment(item.ishVaqtiT, "HH:mm") : null,
+      address: item.address || "Nomalum",
     });
+
     setCurrentItem(item);
-    setIsEditMode(true); // Tahrirlash rejimi
+    setIsEditMode(true);
     setOpen(true);
-    navigate(`${location.pathname}?action=edit`);
+
+    const addressCoords = item.address
+      ? (item.address
+          .split(",")
+          .map((coord: any) => parseFloat(coord.trim())) as [number, number])
+      : [41.2995, 69.2401];
+
+    setPosition(addressCoords);
   };
+
   useEffect(() => {
-    if (location.search.includes("action=edit")) {
-      setIsEditMode(true);
-      setOpen(true);
-    } else if (location.search.includes("action=add")) {
+    if (location.search.includes("action=add")) {
       setOpen(true);
     }
   }, [location.search]);
@@ -174,6 +182,14 @@ export function Filiallar() {
     gap: 8px;
     margin-top: -14px;
   `;
+  const handlePositionChange = (position: [number, number]) => {
+    form.setFieldsValue({
+      address: `${position[0].toFixed(6)}, ${position[1].toFixed(6)}`,
+    });
+
+    setPosition(position);
+  };
+
   return (
     <>
       <Header
@@ -184,28 +200,33 @@ export function Filiallar() {
             marginLeft: 3,
             display: "flex",
             alignItems: "center",
-            justifyContent: "center",
             gap: 8,
             background: "white",
             width: "230px",
           }}
         >
-          <Button
-            style={{
-              border: "none",
-              outline: "none",
-              boxShadow: "none",
-              padding: 0,
-            }}
-            onClick={showDrawer}
+          <div
+            style={{ width: "60px", display: "flex", justifyContent: "end" }}
           >
-            <AiFillPlusCircle
-              style={{ fontSize: 33, background: "white", color: "#20D472" }}
-            />
-          </Button>
-          <Typography style={{ fontSize: 12, fontWeight: 600 }}>
-            Yangi filial <br /> qo’shish
-          </Typography>
+            <Button
+              style={{
+                border: "none",
+                outline: "none",
+                boxShadow: "none",
+                padding: 0,
+              }}
+              onClick={showDrawer}
+            >
+              <AiFillPlusCircle
+                style={{ fontSize: 33, background: "white", color: "#20D472" }}
+              />
+            </Button>
+          </div>
+          <div>
+            <Typography style={{ fontSize: 13, fontWeight: 600 }}>
+              Yangi filial <br /> qo’shish
+            </Typography>
+          </div>
         </div>
         <div
           style={{
@@ -261,7 +282,7 @@ export function Filiallar() {
           marginBottom: "20px",
           width: "100%",
           height: "auto",
-          padding: "15px 15px 15px 55px",
+          padding: "15px 10px 15px 55px",
           background: "white",
           display: "flex",
           justifyContent: "start",
@@ -272,7 +293,7 @@ export function Filiallar() {
           boxShadow: "5px 5px 5px rgba(124, 124, 124, 0.3)",
         }}
       >
-        <div className="flex gap-10 items-center ">
+        <div className="flex gap-10 items-center  ">
           <Typography>Filial Nomi (Uz)</Typography>
         </div>
         <div style={{ borderRight: "1px solid grey " }}></div>
@@ -340,6 +361,7 @@ export function Filiallar() {
                         css={css`
                           font-size: 14px !important;
                           font-weight: 500;
+                          padding-left: 50px;
                         `}
                       >
                         {f.nameRu ? f.nameRu : "-"}
@@ -350,6 +372,7 @@ export function Filiallar() {
                       <Typography
                         css={css`
                           font-size: 14px !important;
+                          padding-left: 70px;
                           font-weight: 500;
                         `}
                       >
@@ -361,6 +384,7 @@ export function Filiallar() {
                         css={css`
                           font-size: 14px !important;
                           font-weight: 500;
+                          padding-left: 80px;
                         `}
                       >
                         {f.ishVaqtiB} - {f.ishVaqtiT}
@@ -477,19 +501,34 @@ export function Filiallar() {
                 />
               </Form.Item>
             </Col>
+            <div className="flex p-1 gap-2">
+              <Col>
+                <Form.Item name="moljal" label="Filial mo'ljal">
+                  <Input placeholder="Iltimos moljal yozing !" />
+                </Form.Item>
+              </Col>
+
+              <Col>
+                <Form.Item
+                  name="address"
+                  label="Filial manzili"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Iltimos manzil yozing!",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Iltimos manzil yozing!" />
+                </Form.Item>
+              </Col>
+            </div>
             <Col span={24}>
-              <Form.Item
-                name="moljal"
-                label="Filial mo'ljal"
-                rules={[
-                  {
-                    required: true,
-                    message: "Iltimos moljal yozing !",
-                  },
-                ]}
-              >
-                <Input placeholder="Iltimos moljal yozing !" />
-              </Form.Item>
+              <LeafletMap
+                //@ts-ignore
+                position={position}
+                onPositionChange={handlePositionChange}
+              />
             </Col>
           </Row>
           <Space style={{ marginTop: 40 }}>

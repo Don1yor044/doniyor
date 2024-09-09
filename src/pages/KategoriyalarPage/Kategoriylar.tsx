@@ -35,10 +35,10 @@ export function Kategoriyalar() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Apidan malumot olish
   useEffect(() => {
     fetchProducts();
   }, []);
+
   const fetchProducts = async () => {
     try {
       const response = await axios.get(
@@ -183,28 +183,33 @@ export function Kategoriyalar() {
             marginLeft: 3,
             display: "flex",
             alignItems: "center",
-            justifyContent: "center",
             gap: 8,
             background: "white",
             width: "230px",
           }}
         >
-          <Button
-            style={{
-              border: "none",
-              outline: "none",
-              boxShadow: "none",
-              padding: 0,
-            }}
-            onClick={showDrawer}
+          <div
+            style={{ width: "60px", display: "flex", justifyContent: "end" }}
           >
-            <AiFillPlusCircle
-              style={{ fontSize: 33, background: "white", color: "#20D472" }}
-            />
-          </Button>
-          <Typography style={{ fontSize: 13, fontWeight: 600 }}>
-            Yangi kategoriya <br /> qo’shish
-          </Typography>
+            <Button
+              style={{
+                border: "none",
+                outline: "none",
+                boxShadow: "none",
+                padding: 0,
+              }}
+              onClick={showDrawer}
+            >
+              <AiFillPlusCircle
+                style={{ fontSize: 33, background: "white", color: "#20D472" }}
+              />
+            </Button>
+          </div>
+          <div>
+            <Typography style={{ fontSize: 13, fontWeight: 600 }}>
+              Yangi kategoriya <br /> qo’shish
+            </Typography>
+          </div>
         </div>
         <div
           style={{
@@ -422,24 +427,26 @@ export function Kategoriyalar() {
                 <Input placeholder="Iltimos  kategoriya nomini (ru)  yozing !" />
               </Form.Item>
             </Col>
-            <Form.Item label="Boshqa kategoriya biriktirish ">
-              <Select
-                placeholder="Kategoriya tanlang"
-                style={{ width: "100%" }}
-                onChange={(value) => setSelectedCategory(value)}
-                value={selectedCategory}
-              >
-                <Select.Option value="Ichimliklar">Ichimliklar</Select.Option>
-                <Select.Option value="Go'shli maxsulot">
-                  Go'shli maxsulot
-                </Select.Option>
-                <Select.Option value="Tovuqli maxsulot">
-                  Tovuqli maxsulot
-                </Select.Option>
-              </Select>
-            </Form.Item>
+            <Col span={24}>
+              <Form.Item label="Boshqa kategoriya biriktirish ">
+                <Select
+                  placeholder="Kategoriya tanlang"
+                  style={{ width: "100%" }}
+                  onChange={(value) => setSelectedCategory(value)}
+                  value={selectedCategory}
+                >
+                  <Select.Option value="Ichimliklar">Ichimliklar</Select.Option>
+                  <Select.Option value="Go'shli maxsulot">
+                    Go'shli maxsulot
+                  </Select.Option>
+                  <Select.Option value="Tovuqli maxsulot">
+                    Tovuqli maxsulot
+                  </Select.Option>
+                </Select>
+              </Form.Item>
+            </Col>
           </Row>
-          <Space style={{ marginTop: 40 }}>
+          <Space style={{ marginTop: 270 }}>
             <Button
               htmlType="submit"
               style={{

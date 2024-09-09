@@ -227,6 +227,7 @@ export function Mijozlar() {
 
     const data = {
       name: values.name,
+      lastName: values.lastName,
       phone: values.phone,
       buyurtmalarSoni: values.buyurtmalarSoni,
       status: "Activ",
@@ -312,28 +313,33 @@ export function Mijozlar() {
             marginLeft: 3,
             display: "flex",
             alignItems: "center",
-            justifyContent: "center",
             gap: 8,
             background: "white",
             width: "230px",
           }}
         >
-          <Button
-            style={{
-              border: "none",
-              outline: "none",
-              boxShadow: "none",
-              padding: 0,
-            }}
-            onClick={showDrawer}
+          <div
+            style={{ width: "60px", display: "flex", justifyContent: "end" }}
           >
-            <AiFillPlusCircle
-              style={{ fontSize: 33, background: "white", color: "#20D472" }}
-            />
-          </Button>
-          <Typography style={{ fontSize: 12, fontWeight: 600 }}>
-            Yangi mijoz <br /> qo’shish
-          </Typography>
+            <Button
+              style={{
+                border: "none",
+                outline: "none",
+                boxShadow: "none",
+                padding: 0,
+              }}
+              onClick={showDrawer}
+            >
+              <AiFillPlusCircle
+                style={{ fontSize: 33, background: "white", color: "#20D472" }}
+              />
+            </Button>
+          </div>
+          <div>
+            <Typography style={{ fontSize: 13, fontWeight: 600 }}>
+              Yangi mijoz <br /> qo’shish
+            </Typography>
+          </div>
         </div>
         <div
           style={{
@@ -649,6 +655,20 @@ export function Mijozlar() {
                 ]}
               >
                 <Input placeholder="Iltimos Mijoz nomini yozing !" />
+              </Form.Item>
+            </Col>
+            <Col span={24}>
+              <Form.Item
+                name="lastName"
+                label="LastName"
+                rules={[
+                  {
+                    required: true,
+                    message: "Iltimos Mijoz lastName yozing !",
+                  },
+                ]}
+              >
+                <Input placeholder="Iltimos Mijoz lastName yozing !" />
               </Form.Item>
             </Col>
 

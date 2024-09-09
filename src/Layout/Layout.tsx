@@ -111,7 +111,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
         onBreakpoint={(broken) => console.log(broken)}
         onCollapse={(collapsed, type) => console.log(collapsed, type)}
         theme="light"
-        width={230}
+        width={235}
       >
         <div
           style={{
@@ -143,21 +143,37 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
           onClick={({ key }) => setActivePage(key)}
           style={{ marginTop: 20 }}
         >
-          {pages.map((page) => (
-            <Menu.Item
-              key={page.name}
-              icon={page.icon}
-              onClick={() => handleMenuClick(page.path, page.text)}
+          <div className="flex">
+            <div
               style={{
-                fontSize: 17,
-                backgroundColor:
-                  activePage === page.text ? "#FCB600" : "transparent",
-                color: activePage === page.text ? "white" : "#000",
+                background: "#FCB600",
+                width: "4px",
+                height: "348px",
+                marginTop: 4,
               }}
-            >
-              {page.text}
-            </Menu.Item>
-          ))}
+            ></div>
+            <div style={{ width: "90%", padding: 0 }}>
+              {pages.map((page) => (
+                <Menu.Item
+                  key={page.name}
+                  icon={page.icon}
+                  onClick={() => handleMenuClick(page.path, page.text)}
+                  style={{
+                    width: "100%",
+                    paddingLeft: 20,
+                    marginLeft: "-0px",
+                    fontSize: 17,
+                    borderRadius: "0px 5px 5px 0px",
+                    backgroundColor:
+                      activePage === page.text ? "#FCB600" : "transparent",
+                    color: activePage === page.text ? "white" : "#000",
+                  }}
+                >
+                  {page.text}
+                </Menu.Item>
+              ))}
+            </div>
+          </div>
         </Menu>
       </Sider>
       <AntLayout>{children}</AntLayout>
