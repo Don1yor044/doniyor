@@ -17,7 +17,7 @@ export const TableHeader = () => (
       display: "flex",
       justifyContent: "start",
       textAlign: "end",
-      gap: "150px",
+      gap: "110px",
       alignContent: "center",
       fontWeight: "bolder",
       boxShadow: "5px 5px 5px rgba(124, 124, 124, 0.3)",
@@ -32,7 +32,11 @@ export const TableHeader = () => (
     </div>
     <div style={{ borderRight: "1px solid grey" }}></div>
     <div>
-      <Typography>So'mda</Typography>
+      <Typography>Naqd</Typography>
+    </div>
+    <div style={{ borderRight: "1px solid grey" }}></div>
+    <div>
+      <Typography>Terminal</Typography>
     </div>
     <div style={{ borderRight: "1px solid grey" }}></div>
     <div>
@@ -42,7 +46,7 @@ export const TableHeader = () => (
 );
 
 type TableContentType = {
-  data: any[]; // Filtered data passed from parent component
+  data: any[];
   loading: boolean;
   filialData: any[];
   buyurtmaData: any[];
@@ -58,7 +62,7 @@ export const ListTableContent: React.FC<TableContentType> = ({
 }) => (
   <Content style={{ margin: "10px 20px 0" }}>
     {loading ? (
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div style={{ display: "flex", justifyContent: "center", marginTop: 15 }}>
         <Spin size="default" />
       </div>
     ) : data.length === 0 ? (
@@ -72,7 +76,11 @@ export const ListTableContent: React.FC<TableContentType> = ({
           ).length;
           const somdaCount = buyurtmaData.filter(
             (order: any) =>
-              order.filialId === f.filialId && order.tolovTuri === "So'mda"
+              order.filialId === f.filialId && order.tolovTuri === "Naqd"
+          ).length;
+          const TerminalCount = buyurtmaData.filter(
+            (order: any) =>
+              order.filialId === f.filialId && order.tolovTuri === "Terminal"
           ).length;
 
           const handleDelete = (id: number) => {
@@ -108,7 +116,6 @@ export const ListTableContent: React.FC<TableContentType> = ({
                       css={css`
                         font-size: 14px !important;
                         font-weight: 500;
-                        margin-left: -30px;
                       `}
                     >
                       {
@@ -122,7 +129,6 @@ export const ListTableContent: React.FC<TableContentType> = ({
                       css={css`
                         font-size: 14px !important;
                         font-weight: 500;
-                        margin-left: -10px;
                       `}
                     >
                       {paymeCount} ta
@@ -137,6 +143,17 @@ export const ListTableContent: React.FC<TableContentType> = ({
                       `}
                     >
                       {somdaCount} ta
+                    </Typography>
+                  </div>
+                  <div style={{ width: `calc(100% / 5)`, paddingLeft: 50 }}>
+                    <Typography
+                      css={css`
+                        font-size: 14px !important;
+                        font-weight: 500;
+                        margin-left: -50px;
+                      `}
+                    >
+                      {TerminalCount} ta
                     </Typography>
                   </div>
 

@@ -147,7 +147,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
             <div
               style={{
                 background: "#FCB600",
-                width: "4px",
+                width: "5px",
                 height: "348px",
                 marginTop: 4,
               }}

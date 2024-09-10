@@ -13,7 +13,6 @@ import {
   Space,
   Typography,
   Form,
-  Upload,
   Spin,
   Card,
 } from "antd";
@@ -26,7 +25,6 @@ import { CiSearch } from "react-icons/ci";
 import { FiFilter } from "react-icons/fi";
 import { FiEdit2 } from "react-icons/fi";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { FiDownloadCloud } from "react-icons/fi";
 import { useLocation, useNavigate } from "react-router-dom";
 import { css } from "@emotion/react";
 const { Option } = Select;
@@ -142,14 +140,12 @@ export function Maxsulotlar() {
   const [form] = Form.useForm();
 
   const onFinish = async (values: any) => {
-    console.log(values.photo);
-
     const data = {
       name: values.name,
       categoryId: values.categoryId,
       price: values.price,
       qoshimcha: values.qoshimcha,
-      photo: values.photo ? values.photo.file.path : null,
+      photo: values.photo,
     };
 
     try {
@@ -462,7 +458,7 @@ export function Maxsulotlar() {
                           font-weight: 500;
                         `}
                       >
-                        {f.qoshimcha}
+                        {f.qoshimcha ? f.qoshimcha : "-"}
                       </Typography>
                     </div>
 
@@ -563,40 +559,22 @@ export function Maxsulotlar() {
               </Form.Item>
             </Col>
             <Col span={24}>
-              <Form.Item
-                name="qoshimcha"
-                label="Qo'shimcha"
-                rules={[
-                  {
-                    required: true,
-                    message: "Iltimos qo'shimcha ma'lumot kiriting!",
-                  },
-                ]}
-              >
+              <Form.Item name="qoshimcha" label="Qo'shimcha">
                 <Input placeholder="Iltimos qo'shimcha ma'lumot kiriting!" />
               </Form.Item>
             </Col>
             <Col span={24}>
-              <Form.Item name="photo">
-                <Upload
-                  listType="picture"
-                  maxCount={1}
-                  beforeUpload={() => false}
-                >
-                  <Button
-                    type="dashed"
-                    style={{ width: "300px", height: "13vh" }}
-                  >
-                    <div>
-                      <div className="ms-16 mb-2">
-                        <FiDownloadCloud fontSize={22} color="#8D9BA8" />
-                      </div>
-                      <div style={{ color: "#8D9BA8" }}>
-                        Maxsulot rasimini yuklang
-                      </div>
-                    </div>
-                  </Button>
-                </Upload>
+              <Form.Item
+                name="photo"
+                label="Rasm (Url)"
+                rules={[
+                  {
+                    required: true,
+                    message: "Iltimos, rasm URL-ni kiriting!",
+                  },
+                ]}
+              >
+                <Input placeholder="Rasm URL-ni kiriting" allowClear />
               </Form.Item>
             </Col>
           </Row>

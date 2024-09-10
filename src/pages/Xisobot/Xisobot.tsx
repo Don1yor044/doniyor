@@ -8,8 +8,8 @@ import { FiRefreshCcw } from "react-icons/fi";
 import { PiBoxArrowDown, PiBoxArrowDownFill } from "react-icons/pi";
 import { RiPieChartFill, RiPieChartLine } from "react-icons/ri";
 import styled from "@emotion/styled";
-import ClosedOrdersChart from "./componets/charts/charts";
 import { ListTableContent, TableHeader } from "./componets/lists";
+import { OrdersChartByDate } from "./componets/charts/charts";
 
 export function Xisobot() {
   const [data, setData] = useState<any[]>([]);
@@ -18,7 +18,7 @@ export function Xisobot() {
   const [buyurtmaData, setBuyurtmaData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
-  const [active, setActive] = useState("Lists");
+  const [active, setActive] = useState("Charts");
 
   useEffect(() => {
     XisobotRender();
@@ -100,6 +100,7 @@ export function Xisobot() {
       const updatedData = data.filter((item: any) => item.id !== id);
       setData(updatedData);
       setFilteredData(updatedData);
+      message.success("Xisobot o'childi");
     } catch (error) {
       console.error("Failed to delete item:", error);
     }
@@ -134,6 +135,7 @@ export function Xisobot() {
                 height: 35,
                 width: 35,
               }}
+              onClick={() => message.success("Ma'lumot yangilandi")}
             >
               <FiRefreshCcw
                 style={{ fontSize: 16, marginLeft: 1, color: "#ffffff" }}
@@ -168,20 +170,39 @@ export function Xisobot() {
               borderRadius: 100,
             }}
           >
-            <Input
-              placeholder="Qidirish"
-              value={searchText}
-              onChange={handleSearch}
-              style={{
-                boxShadow: "none",
-                borderRadius: 100,
-                outline: "none",
-                height: "39px",
-                width: "250px",
-                border: "none",
-                background: "#EDEFF3",
-              }}
-            />
+            {active == "Charts" ? (
+              <Input
+                disabled
+                placeholder="Qidirish"
+                value={searchText}
+                onChange={handleSearch}
+                style={{
+                  boxShadow: "none",
+                  borderRadius: 100,
+                  outline: "none",
+                  height: "39px",
+                  width: "250px",
+                  border: "none",
+                  background: "#EDEFF3",
+                }}
+              />
+            ) : (
+              <Input
+                placeholder="Qidirish"
+                value={searchText}
+                onChange={handleSearch}
+                style={{
+                  boxShadow: "none",
+                  borderRadius: 100,
+                  outline: "none",
+                  height: "39px",
+                  width: "250px",
+                  border: "none",
+                  background: "#EDEFF3",
+                }}
+              />
+            )}
+
             <Button
               style={{
                 outline: "none",
@@ -260,7 +281,7 @@ export function Xisobot() {
         </div>
       </Header>
       {active === "Charts" ? (
-        <ClosedOrdersChart data={data} />
+        <OrdersChartByDate loading={loading} />
       ) : (
         <>
           <TableHeader />

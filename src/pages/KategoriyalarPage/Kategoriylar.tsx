@@ -155,14 +155,10 @@ export function Kategoriyalar() {
     setSelectedCategory(item.boshqaKategoriya); // Tahrirlash uchun tanlangan kategoriya
     setIsEditMode(true); // Tahrirlash rejimi
     setOpen(true);
-    navigate(`${location.pathname}?action=edit`);
   };
 
   useEffect(() => {
-    if (location.search.includes("action=edit")) {
-      setIsEditMode(true);
-      setOpen(true);
-    } else if (location.search.includes("action=add")) {
+    if (location.search.includes("action=add")) {
       setOpen(true);
     }
   }, [location.search]);
@@ -441,6 +437,9 @@ export function Kategoriyalar() {
                   </Select.Option>
                   <Select.Option value="Tovuqli maxsulot">
                     Tovuqli maxsulot
+                  </Select.Option>{" "}
+                  <Select.Option value="   maxsulot">
+                    Qo'shimcha maxsulot
                   </Select.Option>
                 </Select>
               </Form.Item>

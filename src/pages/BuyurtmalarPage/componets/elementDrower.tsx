@@ -49,7 +49,7 @@ export const ElementsDrower: React.FC<MijozDrawerProps> = ({
                   font-size: 18px;
                 `}
               >
-                8549
+                {slecDrower.id}
               </div>
             </div>
             <div className="flex gap-2 items-center">
@@ -63,7 +63,7 @@ export const ElementsDrower: React.FC<MijozDrawerProps> = ({
                   color: "#3b4650",
                 }}
               >
-                00:24
+                {slecDrower.zakazVaqti}
               </div>
             </div>
           </div>
@@ -215,7 +215,16 @@ export const ElementsDrower: React.FC<MijozDrawerProps> = ({
               <div className="flex items-center justify-start gap-2 mt-2">
                 <div
                   style={{
-                    background: "#14E5E4",
+                    background:
+                      OrginalData.find(
+                        (item1: any) => item1.id === slecDrower.id
+                      )?.tolovTuri === "Payme"
+                        ? "#14E5E4"
+                        : OrginalData.find(
+                            (item1: any) => item1.id === slecDrower.id
+                          )?.tolovTuri === "Naqd"
+                        ? "#093"
+                        : "#FCB600",
                     borderRadius: "50%",
                     height: "10px",
                     width: "10px",

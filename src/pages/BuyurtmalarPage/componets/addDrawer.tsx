@@ -339,8 +339,9 @@ export const AddDrowers: React.FC<AddDrawersProps> = ({
                     style={{ width: "100%", fontWeight: 600 }}
                     size="middle"
                   >
-                    <Option value="So'mda">So'mda</Option>
+                    <Option value="Naqd">Naqd</Option>
                     <Option value="Payme">Payme</Option>
+                    <Option value="Terminal">Terminal</Option>
                   </Select>
                 </Form.Item>
                 <Form.Item

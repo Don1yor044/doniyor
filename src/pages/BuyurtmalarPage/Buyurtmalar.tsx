@@ -317,6 +317,7 @@ export function Buyurtmalar() {
       price: `${totalPrice},000`,
       zakazVaqti: moment().format("HH:mm"),
       maxsulotlar: selectedProducts,
+      zakazSanasi: moment().format("YYYY-MM-DD"),
     };
 
     try {
@@ -569,7 +570,7 @@ export function Buyurtmalar() {
                             color: "#3b4650",
                           }}
                         >
-                          00:24
+                          {item.zakazVaqti}
                         </div>
                       </div>
                     </div>
@@ -669,7 +670,16 @@ export function Buyurtmalar() {
                         <div className="flex items-center gap-2">
                           <div
                             style={{
-                              background: "#14E5E4",
+                              background:
+                                OrginalData.find(
+                                  (item1: any) => item1.id === item.id
+                                )?.tolovTuri === "Payme"
+                                  ? "#14E5E4"
+                                  : OrginalData.find(
+                                      (item1: any) => item1.id === item.id
+                                    )?.tolovTuri === "Naqd"
+                                  ? "#093"
+                                  : "#FCB600",
                               borderRadius: "50%",
                               height: "10px",
                               width: "10px",
@@ -680,7 +690,7 @@ export function Buyurtmalar() {
                               //@ts-ignore
                               OrginalData.find(
                                 (item1: any) => item1.id === item.id
-                              ).tolovTuri
+                              )?.tolovTuri
                             }
                           </Typography.Title>
                         </div>
@@ -843,6 +853,7 @@ export function Buyurtmalar() {
                 filialData={filialData}
                 changeStatus={changeStatus}
                 showDrawer={showDrawer}
+                OrginalData={OrginalData}
               />
             ))}
           </div>

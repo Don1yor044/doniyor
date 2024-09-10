@@ -24,6 +24,7 @@ interface Listtype {
   filialData: any[];
   changeStatus: (id: number, status: "next" | "previous" | "otkaz") => void;
   showDrawer: (id: number) => void;
+  OrginalData: any[];
 }
 
 export const Listcomponet: React.FC<Listtype> = ({
@@ -33,12 +34,30 @@ export const Listcomponet: React.FC<Listtype> = ({
   filialData,
   changeStatus,
   showDrawer,
+  OrginalData,
 }) => {
   const mijoz = mijozData.find((mijoz) => mijoz.id === item.mijozId);
   const filial = filialData.find((filial) => filial.id === item.filialId);
   const operator = xodimlarData.find(
     (xodim) => xodim.lavozim === "operator" && xodim.id === item.filialId
   );
+  const paymentType = OrginalData.find(
+    (item1: any) => item1.id === item.id
+  )?.tolovTuri;
+
+  <div
+    style={{
+      background:
+        paymentType === "Payme"
+          ? "#14E5E4"
+          : paymentType === "So'mda"
+          ? "red"
+          : "blue", // Default to blue for other values
+      borderRadius: "50%",
+      height: "10px",
+      width: "10px",
+    }}
+  ></div>;
 
   return (
     <div
@@ -174,7 +193,12 @@ export const Listcomponet: React.FC<Listtype> = ({
             <div className="flex items-center gap-2">
               <div
                 style={{
-                  background: "#14E5E4",
+                  background:
+                    paymentType === "Payme"
+                      ? "#14E5E4"
+                      : paymentType === "Naqd"
+                      ? "#093"
+                      : "#FCB600",
                   borderRadius: "50%",
                   height: "10px",
                   width: "10px",
