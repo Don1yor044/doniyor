@@ -61,6 +61,9 @@ export const LeafletMap: React.FC<LeafletMapProps> = ({
       center={mapPosition}
       zoom={12}
       style={{ height: "200px", width: "100%" }}
+      doubleClickZoom={false}
+      scrollWheelZoom={false}
+      touchZoom={false}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

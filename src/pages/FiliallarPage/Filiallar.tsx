@@ -12,6 +12,7 @@ import {
   TimePicker,
   Spin,
   Card,
+  Modal,
 } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
 import axios from "axios";
@@ -25,7 +26,8 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import moment from "moment";
 import { useLocation, useNavigate } from "react-router-dom";
 import { css } from "@emotion/react";
-import { LeafletMap } from "./addMap/addMap";
+import { LeafletMap } from "./componets/addMap";
+import { Maps } from "./componets/clickMap";
 
 export function Filiallar() {
   const [data, setData] = useState([]);
@@ -37,6 +39,8 @@ export function Filiallar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [position, setPosition] = useState([41.2995, 69.2401]);
+  const [mapVisible, setMapVisible] = useState(false);
+  const [mapPosition, setMapPosition] = useState<[number, number] | null>(null);
 
   const [form] = Form.useForm();
 
@@ -188,6 +192,16 @@ export function Filiallar() {
     });
 
     setPosition(position);
+  };
+  const handleMapOpen = (address: string) => {
+    const addressCoords = address
+      ? (address
+          .split(",")
+          .map((coord: string) => parseFloat(coord.trim())) as [number, number])
+      : [41.2995, 69.2401];
+    //@ts-ignore
+    setMapPosition(addressCoords);
+    setMapVisible(true);
   };
 
   return (
@@ -394,7 +408,7 @@ export function Filiallar() {
                     <div css={containerStyle}>
                       <Button
                         type="text"
-                        // onClick={() => onEdit(f)}
+                        onClick={() => handleMapOpen(f.address)}
                         style={{
                           background: "white",
                           marginLeft: "10px",
@@ -404,6 +418,7 @@ export function Filiallar() {
                         }}
                         icon={<FiMapPin fontSize={17} />}
                       />
+
                       <Button
                         type="text"
                         onClick={() => onEdit(f)}
@@ -547,6 +562,17 @@ export function Filiallar() {
           </Space>
         </Form>
       </Drawer>
+      <Modal
+        title="Filial Manzilini Ko'rsatish"
+        visible={mapVisible}
+        onCancel={() => setMapVisible(false)}
+        footer={null}
+        width={400}
+      >
+        {mapPosition && (
+          <Maps position={mapPosition} onPositionChange={() => {}} />
+        )}
+      </Modal>
     </>
   );
 }
