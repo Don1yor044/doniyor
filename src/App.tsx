@@ -7,9 +7,9 @@ import { Maxsulotlar } from "./pages/MaxsulotlarPage/Maxsulotlar";
 import { Kategoriyalar } from "./pages/KategoriyalarPage/Kategoriylar";
 import { Filiallar } from "./pages/FiliallarPage/Filiallar";
 import { Mijozlar } from "./pages/MijozlarPage/Mijozlar";
-import { Xisobot } from "./pages/Xisobot/Xisobot";
-import Xodimlar from "./pages/Xodimlar/Xodimlar";
-import { Xarita } from "./pages/Xarita/Xarita";
+import { Xisobotlar } from "./pages/XisobotlarPage/Xisobot";
+import { Xodimlar } from "./pages/XodimlarPage/Xodimlar";
+import { Xaritalar } from "./pages/XaritalarPage/Xarita";
 import { Provider } from "react-redux";
 import { store } from "./pages/store";
 function App() {
@@ -29,9 +29,9 @@ function App() {
             <Route path="Kategoriyalar" element={<Kategoriyalar />} />
             <Route path="Filiallar" element={<Filiallar />} />
             <Route path="Mijozlar" element={<Mijozlar />} />
-            <Route path="Xisobot" element={<Xisobot />} />
+            <Route path="Xisobotlar" element={<Xisobotlar />} />
             <Route path="Xodimlar" element={<Xodimlar />} />
-            <Route path="Xarita" element={<Xarita />} />
+            <Route path="Xaritalar" element={<Xaritalar />} />
           </Route>
           <Route path="/" element={<LoginPage />} />
         </Routes>

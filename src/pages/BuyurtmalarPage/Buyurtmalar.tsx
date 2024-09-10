@@ -17,7 +17,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ElementsDrower } from "./componets/elementDrower";
-import { AddDrowers } from "./componets/addDrawer";
+import { AddDrowers } from "./componets/addDrawer/addDrawer";
 import styled from "@emotion/styled";
 import moment from "moment";
 import { Listcomponet } from "./componets/listComponets/list";
@@ -290,9 +290,11 @@ export function Buyurtmalar() {
   };
 
   // delete chek
-  const deleteChek = () => {
+  const deleteChek = async () => {
     setButtonGroups({});
     setMaxsulotlarData([]);
+    maxsulotlarRender();
+    categoryRender();
   };
   // // add
   const totalPrice = calculateTotal();
@@ -306,7 +308,10 @@ export function Buyurtmalar() {
         price: item.price,
         counter: buttonGroups[item.id],
       }));
-
+    if (selectedProducts.length === 0) {
+      message.error("Maxsulotlar tanlanmagan. Iltimos, mahsulotlarni tanlang.");
+      return;
+    }
     const newData = {
       id: OrginalData.length + 1,
       mijozId: values.mijoz,
@@ -318,6 +323,7 @@ export function Buyurtmalar() {
       zakazVaqti: moment().format("HH:mm"),
       maxsulotlar: selectedProducts,
       zakazSanasi: moment().format("YYYY-MM-DD"),
+      address: values.address,
     };
 
     try {
@@ -496,7 +502,7 @@ export function Buyurtmalar() {
       </Header>
       <Content
         style={{
-          margin: "24px 120px 0px 34px",
+          margin: "24px 50px 0px 34px",
         }}
       >
         {loading ? (
@@ -843,7 +849,7 @@ export function Buyurtmalar() {
             ))}
           </div>
         ) : (
-          <div>
+          <div css={ScrollList}>
             {data.map((order: any) => (
               <Listcomponet
                 key={order.id}
@@ -908,6 +914,13 @@ const gridContainer = css`
   gap: 15px;
   grid-template-columns: repeat(4, 1fr);
   margin-top: 10px;
+  margin-right: 0px;
+  height: 87vh;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+  }
 `;
 const StyledSegmentOption = styled("div")`
   .ant-segmented-item {
@@ -921,4 +934,16 @@ const StyledSegmentOption = styled("div")`
     border-radius: 50px 50px 50px 50px !important;
     padding: 7px 10px;
   }
+`;
+const ScrollList = css`
+  height: 87vh;
+  width: auto;
+  overflow-y: scroll;
+  padding-right: 25px;
+  ::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+  }
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 `;

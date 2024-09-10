@@ -29,6 +29,7 @@ import { LuCheckCircle } from "react-icons/lu";
 
 export function Mijozlar() {
   const [data, setData] = useState([]);
+  const [buyurtmalarData, setBuyurtmalarData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filteredData, setFilteredData] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
@@ -39,98 +40,9 @@ export function Mijozlar() {
   const [sortOrder, setSortOrder] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<string[]>([]);
 
-  // const columns = [
-  //   {
-  //     title: "Mijoz Ismi",
-  //     dataIndex: "name",
-  //     key: "name",
-  //   },
-  //   {
-  //     title: "Telefon Raqami",
-  //     dataIndex: "phone",
-  //     key: "phone",
-  //   },
-  //   {
-  //     title: "Buyurtmalar Soni",
-  //     dataIndex: "buyurtmalarSoni",
-  //     key: "buyurtmalarSoni",
-  //     render: (text: any) => <div style={{ marginLeft: 50 }}>{text}</div>,
-  //   },
-  //   {
-  //     title: "Status",
-  //     dataIndex: "status",
-  //     key: "status",
-  //     //@ts-ignore
-  //     render: (text: any, item: any) => {
-  //       const color = item.status === "Activ" ? "green" : "red";
-  //       return (
-  //         <span style={{ color: color, fontWeight: 500 }}>{item.status}</span>
-  //       );
-  //     },
-  //   },
-  //   {
-  //     title: "Actions",
-  //     key: "actions",
-  //     //@ts-ignore
-  //     render: (text: any, record: any) => (
-  //       <div>
-  //         {record.status === "Activ" ? (
-  //           <Button
-  //             type="text"
-  //             style={{
-  //               background: "white",
-  //               borderRadius: "50%",
-  //               padding: 18,
-  //               border: "4px solid #EDEFF3",
-  //             }}
-  //             icon={<MdBlockFlipped fontSize={17} />}
-  //             onClick={() => handleStatusChange(record.id, "block")}
-  //           />
-  //         ) : (
-  //           <Button
-  //             type="text"
-  //             style={{
-  //               background: "white",
-  //               borderRadius: "50%",
-  //               padding: 18,
-  //               border: "4px solid #EDEFF3",
-  //             }}
-  //             icon={<FiCheckCircle fontSize={17} />}
-  //             onClick={() => handleStatusChange(record.id, "Activ")}
-  //           />
-  //         )}
-  //         <Button
-  //           type="text"
-  //           onClick={() => onEdit(record)}
-  //           style={{
-  //             background: "white",
-  //             borderRadius: "50%",
-  //             marginLeft: "15px",
-  //             padding: 18,
-  //             border: "4px solid #EDEFF3",
-  //           }}
-  //           icon={<FiEdit2 fontSize={17} />}
-  //         ></Button>
-  //         <Button
-  //           type="text"
-  //           onClick={() => handleDelete(record.id)}
-  //           style={{
-  //             background: "white",
-  //             borderRadius: "50%",
-  //             padding: 18,
-  //             marginLeft: "15px",
-  //             border: "4px solid #EDEFF3",
-  //           }}
-  //           icon={<FaRegTrashAlt fontSize={17} />}
-  //         ></Button>
-  //       </div>
-  //     ),
-  //   },
-  // ];
-
-  // Apidan malumot olish
   useEffect(() => {
     fetchProducts();
+    BuyurtmalarData();
   }, []);
   const fetchProducts = async () => {
     try {
@@ -141,6 +53,18 @@ export function Mijozlar() {
       setLoading(false);
     } catch (error) {
       message.error("Failed to fetch products.");
+      setLoading(false);
+    }
+  };
+  const BuyurtmalarData = async () => {
+    try {
+      const response = await axios.get(
+        "https://46d4deb0e08aaad2.mokky.dev/Buyurtmalar"
+      );
+      setBuyurtmalarData(response.data);
+      setLoading(false);
+    } catch (error) {
+      message.error("Failed to fetch buyurmalar.");
       setLoading(false);
     }
   };
@@ -274,15 +198,11 @@ export function Mijozlar() {
     setCurrentItem(item);
     setIsEditMode(true);
     setOpen(true);
-    navigate(`${location.pathname}?action=edit`);
   };
 
   // quareni kuzatish
   useEffect(() => {
-    if (location.search.includes("action=edit")) {
-      setIsEditMode(true);
-      setOpen(true);
-    } else if (location.search.includes("action=add")) {
+    if (location.search.includes("action=add")) {
       setOpen(true);
     }
   }, [location.search]);
@@ -446,7 +366,7 @@ export function Mijozlar() {
           <Typography>Actions</Typography>
         </div>
       </div>
-      <Content style={{ margin: "10px 20px 0" }}>
+      <Content style={{ margin: "10px 20px 0" }} css={StyleContent}>
         {loading ? (
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Spin size="default" />
@@ -506,7 +426,12 @@ export function Mijozlar() {
                           font-weight: 500;
                         `}
                       >
-                        {f.buyurtmalarSoni}
+                        {
+                          buyurtmalarData.filter(
+                            (buyurtma: any) => buyurtma.mijozId === f.id
+                          )?.length
+                        }{" "}
+                        ta
                       </Typography>
                     </div>
                     <div style={{ width: `calc(100% / 5)`, paddingLeft: 50 }}>
@@ -720,3 +645,12 @@ export function Mijozlar() {
     </>
   );
 }
+const StyleContent = css`
+  max-height: 77vh !important;
+  width: auto;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+  }
+`;

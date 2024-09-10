@@ -214,127 +214,133 @@ export const Listcomponet: React.FC<Listtype> = ({
       <div css={CardStyle}>
         <div
           css={css`
-            position: absolute;
+            /* position: absolute; */
+            display: flex;
+            width: 100%;
           `}
         >
-          <div style={{ fontWeight: 500, color: "grey", fontSize: 12 }}>
-            Operator
+          <div style={{ width: "70%", paddingInline: 10 }}>
+            <div style={{ fontWeight: 500, color: "grey", fontSize: 12 }}>
+              Operator
+            </div>
+            <Typography.Title level={5}>
+              {operator?.name || "Nasriddin"}
+            </Typography.Title>
+            <div
+              style={{
+                fontWeight: 500,
+                color: "grey",
+                fontSize: 12,
+                marginTop: 20,
+              }}
+            >
+              Filial:
+            </div>
+            <Typography.Title level={5} style={{ margin: 0 }}>
+              Fast Food
+            </Typography.Title>
+            <Typography.Title level={5} style={{ margin: 0 }}>
+              {filial?.nameUz}
+            </Typography.Title>
           </div>
-          <Typography.Title level={5}>
-            {operator?.name || "Nasriddin"}
-          </Typography.Title>
-          <div
-            style={{
-              fontWeight: 500,
-              color: "grey",
-              fontSize: 12,
-              marginTop: 20,
-            }}
-          >
-            Filial:
-          </div>
-          <Typography.Title level={5} style={{ margin: 0 }}>
-            Fast Food
-          </Typography.Title>
-          <Typography.Title level={5} style={{ margin: 0 }}>
-            {filial?.nameUz}
-          </Typography.Title>
           {/* Status Change Buttons */}
-          <div
-            css={css`
-              position: relative;
-              top: -120px;
-              right: -227px;
-            `}
-          >
-            {item.status === "Yangi" ? (
-              <button
-                css={css`
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  background: white;
-                  border-radius: 50%;
-                  height: 55px;
-                  width: 55px;
-                  padding: 0;
-                  border: 5px solid #edeff3;
-                  box-shadow: none;
-                  z-index: 99%;
-                `}
-                onClick={(event) => {
-                  event.stopPropagation();
-                  changeStatus(item.id, "otkaz");
-                }}
-              >
-                <CgClose size={24} />
-              </button>
-            ) : (
-              <button
-                css={css`
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  background: white;
-                  border-radius: 50%;
-                  height: 55px;
-                  width: 55px;
-                  padding: 0;
-                  border: 5px solid #edeff3;
-                  box-shadow: none;
-                  z-index: 99%;
-                `}
-                onClick={(event) => {
-                  event.stopPropagation();
-                  changeStatus(item.id, "previous");
-                }}
-              >
-                <CgClose size={24} />
-              </button>
-            )}
-            {item.status === "Yopilgan" ? (
-              <button
-                css={css`
-                  display: none;
-                  justify-content: center;
-                  align-items: center;
-                  background: white;
-                  border-radius: 50%;
-                  height: 55px;
-                  width: 55px;
-                  margin-top: 10px;
-                  padding: 0;
-                  border: 5px solid #edeff3;
-                `}
-                onClick={(event) => {
-                  event.stopPropagation();
-                  changeStatus(item.id, "next");
-                }}
-              >
-                <LuCheck size={24} />
-              </button>
-            ) : (
-              <button
-                css={css`
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  background: white;
-                  border-radius: 50%;
-                  height: 55px;
-                  width: 55px;
-                  margin-top: 10px;
-                  padding: 0;
-                  border: 5px solid #edeff3;
-                `}
-                onClick={(event) => {
-                  event.stopPropagation();
-                  changeStatus(item.id, "next");
-                }}
-              >
-                <LuCheck size={24} />
-              </button>
-            )}
+          <div style={{ width: "10%" }}>
+            <div
+              css={css`
+                margin: 0;
+                margin-left: 70px;
+                margin-top: 5px;
+              `}
+            >
+              {item.status === "Yangi" ? (
+                <button
+                  css={css`
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background: white;
+                    border-radius: 50%;
+                    height: 55px;
+                    width: 55px;
+                    padding: 0;
+                    border: 5px solid #edeff3;
+                    box-shadow: none;
+                    z-index: 99%;
+                  `}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    changeStatus(item.id, "otkaz");
+                  }}
+                >
+                  <CgClose size={24} />
+                </button>
+              ) : (
+                <button
+                  css={css`
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background: white;
+                    border-radius: 50%;
+                    height: 55px;
+                    width: 55px;
+                    padding: 0;
+                    border: 5px solid #edeff3;
+                    box-shadow: none;
+                    z-index: 99%;
+                  `}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    changeStatus(item.id, "previous");
+                  }}
+                >
+                  <CgClose size={24} />
+                </button>
+              )}
+              {item.status === "Yopilgan" ? (
+                <button
+                  css={css`
+                    display: none;
+                    justify-content: center;
+                    align-items: center;
+                    background: white;
+                    border-radius: 50%;
+                    height: 55px;
+                    width: 55px;
+                    margin-top: 10px;
+                    padding: 0;
+                    border: 5px solid #edeff3;
+                  `}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    changeStatus(item.id, "next");
+                  }}
+                >
+                  <LuCheck size={24} />
+                </button>
+              ) : (
+                <button
+                  css={css`
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background: white;
+                    border-radius: 50%;
+                    height: 55px;
+                    width: 55px;
+                    margin-top: 20px;
+                    padding: 0;
+                    border: 5px solid #edeff3;
+                  `}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    changeStatus(item.id, "next");
+                  }}
+                >
+                  <LuCheck size={24} />
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>

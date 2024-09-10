@@ -33,7 +33,7 @@ export function DraggableMarker({ position, popupText }: DraggableMarkerProps) {
   );
 }
 
-export const Xarita = () => {
+export const Xaritalar = () => {
   const [filialData, setFilialData] = useState([]);
   useEffect(() => {
     filialRender();

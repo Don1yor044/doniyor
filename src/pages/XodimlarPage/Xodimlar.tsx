@@ -11,7 +11,7 @@ import { AddDrawer } from "./componets/addDrawer";
 import { EditDrawer } from "./componets/editDrawer";
 import { FilterComponent } from "./componets/filterModal";
 
-export default function Xodimlar() {
+export const Xodimlar = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -181,7 +181,7 @@ export default function Xodimlar() {
           <Typography>Actions</Typography>
         </div>
       </div>
-      <Content style={{ margin: "10px 20px 0" }}>
+      <Content style={{ margin: "10px 20px 0" }} css={StyleContent}>
         {loading ? (
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Spin size="default" />
@@ -301,4 +301,13 @@ export default function Xodimlar() {
       />
     </>
   );
-}
+};
+const StyleContent = css`
+  max-height: 77vh !important;
+  width: auto;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+  }
+`;

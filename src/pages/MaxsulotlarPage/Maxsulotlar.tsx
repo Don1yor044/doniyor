@@ -189,13 +189,9 @@ export function Maxsulotlar() {
     setCurrentItem(item);
     setIsEditMode(true);
     setOpen(true);
-    navigate(`${location.pathname}?action=edit`);
   };
   useEffect(() => {
-    if (location.search.includes("action=edit")) {
-      setIsEditMode(true);
-      setOpen(true);
-    } else if (location.search.includes("action=add")) {
+    if (location.search.includes("action=add")) {
       setOpen(true);
     }
   }, [location.search]);
@@ -373,7 +369,7 @@ export function Maxsulotlar() {
         </div>
       </div>
 
-      <Content style={{ margin: "10px 20px 0" }}>
+      <Content style={{ margin: "10px 20px 0" }} css={StyleContent}>
         {loading ? (
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Spin size="default" />
@@ -597,3 +593,12 @@ export function Maxsulotlar() {
     </>
   );
 }
+const StyleContent = css`
+  max-height: 77vh !important;
+  width: auto;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+  }
+`;

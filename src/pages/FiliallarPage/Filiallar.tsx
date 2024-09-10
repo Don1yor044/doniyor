@@ -328,7 +328,7 @@ export function Filiallar() {
         </div>
       </div>
 
-      <Content style={{ margin: "10px 20px 0" }}>
+      <Content style={{ margin: "10px 20px 0" }} css={StyleContent}>
         {loading ? (
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Spin size="default" />
@@ -576,3 +576,12 @@ export function Filiallar() {
     </>
   );
 }
+const StyleContent = css`
+  max-height: 77vh !important;
+  width: auto;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+  }
+`;

@@ -11,7 +11,7 @@ import styled from "@emotion/styled";
 import { ListTableContent, TableHeader } from "./componets/lists";
 import { OrdersChartByDate } from "./componets/charts/charts";
 
-export function Xisobot() {
+export function Xisobotlar() {
   const [data, setData] = useState<any[]>([]);
   const [filteredData, setFilteredData] = useState<any[]>([]);
   const [filialData, setFilialData] = useState<any[]>([]);

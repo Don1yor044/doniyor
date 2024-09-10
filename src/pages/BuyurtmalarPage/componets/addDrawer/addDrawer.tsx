@@ -14,9 +14,11 @@ import {
 } from "antd";
 import { Option } from "antd/es/mentions";
 import moment from "moment";
+import { useState } from "react";
 import { BiTrash } from "react-icons/bi";
 import { GoPlus } from "react-icons/go";
 import { RxMinus } from "react-icons/rx";
+import { BuyurtmaMaps } from "./mapsComponet";
 
 type Product = {
   id: number;
@@ -76,7 +78,15 @@ export const AddDrowers: React.FC<AddDrawersProps> = ({
   filialData,
 }) => {
   console.log(categoriesData);
-
+  const [position, setPosition] = useState<[number, number]>([
+    41.2995, 69.2401,
+  ]);
+  const handlePositionChange = (newPosition: [number, number]) => {
+    form.setFieldsValue({
+      address: `${newPosition[0].toFixed(6)}, ${newPosition[1].toFixed(6)}`,
+    });
+    setPosition(newPosition);
+  };
   return (
     <Drawer width={1115} onClose={AddClose} open={addOpen}>
       <div className="flex gap-10">
@@ -108,10 +118,7 @@ export const AddDrowers: React.FC<AddDrawersProps> = ({
             {loading ? (
               <p>Loading...</p>
             ) : (
-              <div
-                className="flex gap-10 flex-wrap py-5 "
-                style={{ overflow: "hidden" }}
-              >
+              <div className="flex gap-10 flex-wrap py-5 " css={styleOrder}>
                 {filterMaxsulotlarData.map((item: any) => (
                   <div
                     key={item.id}
@@ -221,8 +228,9 @@ export const AddDrowers: React.FC<AddDrawersProps> = ({
                 padding: 0;
                 box-shadow: none;
               `}
+              onClick={deleteChek}
             >
-              <BiTrash size={20} color="grey" onClick={deleteChek} />
+              <BiTrash size={20} color="grey" />
             </button>
           </div>
 
@@ -233,6 +241,7 @@ export const AddDrowers: React.FC<AddDrawersProps> = ({
               padding: "10px 15px",
               borderRadius: 5,
             }}
+            css={chekscrol}
           >
             <div>
               {maxsulotlarData.map(
@@ -276,6 +285,7 @@ export const AddDrowers: React.FC<AddDrawersProps> = ({
               </Typography.Title>
             </div>
           </div>
+          {/* Form  */}
           <Form
             form={form}
             onFinish={handleSave}
@@ -361,19 +371,27 @@ export const AddDrowers: React.FC<AddDrawersProps> = ({
               </div>
               <Form.Item
                 name="address"
-                label="Manzil"
-                style={{ marginBottom: 10 }}
+                label="Yetkazib manzili"
+                rules={[
+                  { required: true, message: "Xaritadan manzilizni toping !" },
+                ]}
               >
-                <Input type="text" placeholder="Abu daby kochasi 42A" />
+                <Input
+                  type="text"
+                  disabled
+                  placeholder="Manzilingizni cordinatasi"
+                  value={
+                    position
+                      ? `${position[0].toFixed(6)}, ${position[1].toFixed(6)}`
+                      : ""
+                  }
+                  readOnly
+                />
               </Form.Item>
-              <div>
-                <iframe
-                  width="100%"
-                  height="150"
-                  style={{ borderRadius: 15 }}
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2511.604305474078!2d69.22900996647314!3d41.32532870196679!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8bb7a0ebbae3%3A0xf9e01b5d45fc68cd!2sPDP%20Academy!5e0!3m2!1sru!2s!4v1717676235070!5m2!1sru!2s"
-                ></iframe>
-              </div>
+              <BuyurtmaMaps
+                position={position}
+                onPositionChange={handlePositionChange}
+              />
               <Form.Item style={{ margin: 0 }}>
                 <Button
                   type="primary"
@@ -395,3 +413,22 @@ export const AddDrowers: React.FC<AddDrawersProps> = ({
     </Drawer>
   );
 };
+const chekscrol = css`
+  max-height: 15vh !important;
+  width: auto;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+  }
+`;
+
+const styleOrder = css`
+  max-height: 74vh !important;
+  width: auto;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+  }
+`;
