@@ -1,12 +1,14 @@
+/** @jsxImportSource @emotion/react */
+
 import React, { useEffect, useState } from "react";
-import { Menu, Layout as AntLayout, Image, Typography } from "antd";
+import { Menu, Layout as AntLayout, Image, Typography, Button } from "antd";
 
 // photo
 import menuPhoto from "../Photos/07d88f294f383dd96f307e6436c2f55e.jpg";
 
 // icons
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
-import { FiArchive } from "react-icons/fi";
+import { FiArchive, FiLogIn } from "react-icons/fi";
 import { FiLayers } from "react-icons/fi";
 import { HiOutlineMapPin } from "react-icons/hi2";
 import { LuUsers } from "react-icons/lu";
@@ -65,7 +67,7 @@ const pages: {
     name: "Xisobot",
     icon: <LuBarChart2 style={{ fontSize: "21px" }} />,
     text: "Xisobot",
-    path: "/Xisobot",
+    path: "/Xisobotlar",
   },
   {
     id: 7,
@@ -79,7 +81,7 @@ const pages: {
     name: "Xarita",
     icon: <RiMapPinLine style={{ fontSize: "21px" }} />,
     text: "Xarita",
-    path: "/Xarita",
+    path: "/Xaritalar",
   },
 ];
 
@@ -175,6 +177,30 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
             </div>
           </div>
         </Menu>
+        <div
+          className="p-5"
+          style={{
+            display: "flex",
+            justifyContent: "start",
+            height: "35vh",
+            alignItems: "end",
+          }}
+        >
+          <Button
+            className="flex items-center gap-2  "
+            style={{
+              boxShadow: "none",
+              border: "none",
+              outline: "none",
+            }}
+            onClick={() => navigate("/")}
+          >
+            <FiLogIn size={20} />
+            <Typography.Title level={5} className="mt-2">
+              Chiqish
+            </Typography.Title>
+          </Button>
+        </div>
       </Sider>
       <AntLayout>{children}</AntLayout>
     </AntLayout>

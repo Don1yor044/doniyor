@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
+import React, { useState } from "react";
 import { css } from "@emotion/react";
-import { Typography, Button } from "antd";
+import { Typography, Button, message } from "antd";
 import { FiUser, FiPhone } from "react-icons/fi";
 import { BiBookmark } from "react-icons/bi";
 import { RxClipboard } from "react-icons/rx";
@@ -9,6 +9,7 @@ import { CiDeliveryTruck } from "react-icons/ci";
 import { CgClose } from "react-icons/cg";
 import { LuCheck } from "react-icons/lu";
 import { BsClock } from "react-icons/bs";
+import { FaBookmark } from "react-icons/fa";
 const CardStyle = css`
   padding: 25px 25px;
   width: 100%;
@@ -25,6 +26,7 @@ interface Listtype {
   changeStatus: (id: number, status: "next" | "previous" | "otkaz") => void;
   showDrawer: (id: number) => void;
   OrginalData: any[];
+  changeSaqlangan: (id: number, currentSaqlangan: "togri" | "notogri") => void;
 }
 
 export const Listcomponet: React.FC<Listtype> = ({
@@ -35,6 +37,7 @@ export const Listcomponet: React.FC<Listtype> = ({
   changeStatus,
   showDrawer,
   OrginalData,
+  changeSaqlangan,
 }) => {
   const mijoz = mijozData.find((mijoz) => mijoz.id === item.mijozId);
   const filial = filialData.find((filial) => filial.id === item.filialId);
@@ -44,7 +47,6 @@ export const Listcomponet: React.FC<Listtype> = ({
   const paymentType = OrginalData.find(
     (item1: any) => item1.id === item.id
   )?.tolovTuri;
-
   <div
     style={{
       background:
@@ -58,6 +60,17 @@ export const Listcomponet: React.FC<Listtype> = ({
       width: "10px",
     }}
   ></div>;
+
+  const [isSaved, setIsSaved] = useState(item.saqlangan === "togri");
+
+  const handleSaveClick = async () => {
+    try {
+      await changeSaqlangan(item.id, item.saqlangan);
+      setIsSaved(!isSaved);
+    } catch (error) {
+      message.error("saqlanganda yangilashda xatolik.");
+    }
+  };
 
   return (
     <div
@@ -129,8 +142,16 @@ export const Listcomponet: React.FC<Listtype> = ({
                 border: "none",
                 outline: "none",
               }}
+              onClick={(event) => {
+                event.stopPropagation();
+                handleSaveClick();
+              }}
             >
-              <BiBookmark style={{ fontSize: 20, color: "#4e5458b0" }} />
+              {isSaved ? (
+                <FaBookmark style={{ fontSize: 19, color: "#282828ae" }} />
+              ) : (
+                <BiBookmark style={{ fontSize: 20, color: "#4e5458b0" }} />
+              )}
             </Button>
           </div>
         </div>

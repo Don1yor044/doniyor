@@ -9,9 +9,9 @@ import { Filiallar } from "./pages/FiliallarPage/Filiallar";
 import { Mijozlar } from "./pages/MijozlarPage/Mijozlar";
 import { Xisobotlar } from "./pages/XisobotlarPage/Xisobot";
 import { Xodimlar } from "./pages/XodimlarPage/Xodimlar";
-import { Xaritalar } from "./pages/XaritalarPage/Xarita";
 import { Provider } from "react-redux";
 import { store } from "./pages/store";
+import { Xaritalar } from "./pages/XaritalarPage/Xarita";
 function App() {
   return (
     <Provider store={store}>

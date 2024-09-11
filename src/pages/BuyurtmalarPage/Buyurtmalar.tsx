@@ -21,6 +21,7 @@ import { AddDrowers } from "./componets/addDrawer/addDrawer";
 import styled from "@emotion/styled";
 import moment from "moment";
 import { Listcomponet } from "./componets/listComponets/list";
+import { FaBookmark } from "react-icons/fa";
 
 // const { Option } = Select;
 
@@ -348,6 +349,42 @@ export function Buyurtmalar() {
     : null;
   //@ts-ignore
   const products = selectedOrder ? selectedOrder.maxsulotlar : [];
+  const changeSaqlangan = async (id: number, currentSaqlangan: string) => {
+    try {
+      const newStatus = currentSaqlangan === "togri" ? "notogri" : "togri";
+
+      await axios.patch(
+        `https://46d4deb0e08aaad2.mokky.dev/Buyurtmalar/${id}`,
+        {
+          id: id,
+          saqlangan: newStatus,
+        }
+      );
+
+      await filterStatusRender();
+      await BuyurtmalarRender();
+    } catch (error) {
+      message.error("Buyurtma statusini yangilashda xatolik.");
+    }
+  };
+  const toggleSaqlangan = async (id: number, currentSaqlangan: string) => {
+    try {
+      const newStatus = currentSaqlangan === "togri" ? "notogri" : "togri";
+
+      await axios.patch(
+        `https://46d4deb0e08aaad2.mokky.dev/Buyurtmalar/${id}`,
+        {
+          id: id,
+          saqlangan: newStatus,
+        }
+      );
+
+      await filterStatusRender();
+      await BuyurtmalarRender();
+    } catch (error) {
+      message.error("Buyurtma statusini yangilashda xatolik.");
+    }
+  };
 
   return (
     <StyledSegmentOption>
@@ -550,19 +587,43 @@ export function Buyurtmalar() {
                           {item.id}
                         </div>
                         <div>
-                          <Button
-                            style={{
-                              padding: "15px 7px",
-                              borderRadius: "50%",
-                              background: "#EDEFF3",
-                              border: "none",
-                              outline: "none",
-                            }}
-                          >
-                            <BiBookmark
-                              style={{ fontSize: 19, color: "#4e5458b0" }}
-                            />
-                          </Button>
+                          {item.saqlangan === "togri" ? (
+                            <Button
+                              style={{
+                                padding: "15px 7px",
+                                borderRadius: "50%",
+                                background: "#EDEFF3",
+                                border: "none",
+                                outline: "none",
+                              }}
+                              onClick={(event) => {
+                                event.stopPropagation();
+                                toggleSaqlangan(item.id, item.saqlangan);
+                              }}
+                            >
+                              <FaBookmark
+                                style={{ fontSize: 19, color: "#4e5458b0" }}
+                              />
+                            </Button>
+                          ) : (
+                            <Button
+                              style={{
+                                padding: "15px 7px",
+                                borderRadius: "50%",
+                                background: "#EDEFF3",
+                                border: "none",
+                                outline: "none",
+                              }}
+                              onClick={(event) => {
+                                event.stopPropagation();
+                                toggleSaqlangan(item.id, item.saqlangan);
+                              }}
+                            >
+                              <BiBookmark
+                                style={{ fontSize: 20, color: "#4e5458b0" }}
+                              />
+                            </Button>
+                          )}
                         </div>
                       </div>
                       <div className="flex gap-2 items-center">
@@ -860,6 +921,7 @@ export function Buyurtmalar() {
                 changeStatus={changeStatus}
                 showDrawer={showDrawer}
                 OrginalData={OrginalData}
+                changeSaqlangan={changeSaqlangan}
               />
             ))}
           </div>
