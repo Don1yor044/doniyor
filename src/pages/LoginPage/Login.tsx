@@ -1,4 +1,4 @@
-import { Flex, Image, Button, Form, Input, Typography } from "antd";
+import { Flex, Image, Button, Form, Input, Typography, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import LoginPoto from "../../Photos/7e031162571d409fd768a6460b131b3b.png";
 
@@ -6,10 +6,11 @@ export function LoginPage() {
   const navigate = useNavigate();
 
   const onFinish = (values: { username: string; password: string }) => {
-    if (values.username === "doni@gmail.com" && values.password === "1234") {
+    if (values.username === "admin" && values.password === "1234") {
       navigate("/buyurtmalar");
+      message.success("Xush kelibsiz admin");
     } else {
-      alert("Email yoki parol xato !");
+      message.error("name yoki parol xato !");
     }
   };
 
@@ -73,7 +74,7 @@ export function LoginPage() {
                       marginTop: 10,
                       paddingInline: 20,
                     }}
-                    placeholder="Email"
+                    placeholder="Name"
                   />
                 </Form.Item>
                 <hr

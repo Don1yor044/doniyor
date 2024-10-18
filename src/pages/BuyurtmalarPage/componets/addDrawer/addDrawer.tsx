@@ -19,6 +19,7 @@ import { BiTrash } from "react-icons/bi";
 import { GoPlus } from "react-icons/go";
 import { RxMinus } from "react-icons/rx";
 import { BuyurtmaMaps } from "./mapsComponet";
+import styled from "@emotion/styled";
 
 type Product = {
   id: number;
@@ -95,26 +96,28 @@ export const AddDrowers: React.FC<AddDrawersProps> = ({
             <Typography.Title level={4}>
               Yangi buyurtmalar qo'shish
             </Typography.Title>
-            <Segmented
-              size="large"
-              style={{
-                padding: "5px 20px",
-                borderRadius: 50,
-                width: "100%",
-              }}
-              css={css`
-                .ant-segmented-item {
-                  border-radius: 15px 15px 15px 15px !important;
-                }
-              `}
-              value={selectedMaxsulotlar}
-              options={categoriesData.map((item: any) => ({
-                label: item.nameUz,
-                value: item.id,
-              }))}
-              block
-              onChange={(value) => setSelectedMaxsulotlar(Number(value))}
-            />
+            <SegmentStyle>
+              <Segmented
+                size="large"
+                style={{
+                  padding: "5px 20px",
+                  borderRadius: 50,
+                  width: "100%",
+                }}
+                css={css`
+                  .ant-segmented-item {
+                    border-radius: 15px 15px 15px 15px !important;
+                  }
+                `}
+                value={selectedMaxsulotlar}
+                options={categoriesData.map((item: any) => ({
+                  label: item.nameUz,
+                  value: item.id,
+                }))}
+                block
+                onChange={(value) => setSelectedMaxsulotlar(Number(value))}
+              />
+            </SegmentStyle>
             {loading ? (
               <p>Loading...</p>
             ) : (
@@ -216,7 +219,8 @@ export const AddDrowers: React.FC<AddDrawersProps> = ({
         <div style={{ width: "34%" }}>
           <div className="flex justify-between">
             <Typography.Title level={4}>Buyurtmalar ro'yxati</Typography.Title>
-            <button
+            <Button
+              type="text"
               css={css`
                 display: flex;
                 justify-content: center;
@@ -231,7 +235,7 @@ export const AddDrowers: React.FC<AddDrawersProps> = ({
               onClick={deleteChek}
             >
               <BiTrash size={20} color="grey" />
-            </button>
+            </Button>
           </div>
 
           {/* cheak  */}
@@ -430,5 +434,10 @@ const styleOrder = css`
   ::-webkit-scrollbar {
     width: 0;
     background: transparent;
+  }
+`;
+const SegmentStyle = styled("div")`
+  .ant-segmented-thumb {
+    border-radius: 15px !important;
   }
 `;

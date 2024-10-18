@@ -10,11 +10,12 @@ import { Mijozlar } from "./pages/MijozlarPage/Mijozlar";
 import { Xisobotlar } from "./pages/XisobotlarPage/Xisobot";
 import { Xodimlar } from "./pages/XodimlarPage/Xodimlar";
 import { Provider } from "react-redux";
-import { store } from "./pages/store";
 import { Xaritalar } from "./pages/XaritalarPage/Xarita";
+import { ErrorBoundarayContainer } from "./pages/Additions/ErorrBoundry/erorrboundy";
+import { NotFound } from "./pages/Additions/NotFound/notFound";
 function App() {
   return (
-    <Provider store={store}>
+    <ErrorBoundarayContainer>
       <BrowserRouter>
         <Routes>
           <Route
@@ -24,6 +25,7 @@ function App() {
               </Layout>
             }
           >
+            <Route path="*" element={<NotFound />} />
             <Route path="Buyurtmalar" element={<Buyurtmalar />} />
             <Route path="Maxsulotlar" element={<Maxsulotlar />} />
             <Route path="Kategoriyalar" element={<Kategoriyalar />} />
@@ -36,7 +38,7 @@ function App() {
           <Route path="/" element={<LoginPage />} />
         </Routes>
       </BrowserRouter>
-    </Provider>
+    </ErrorBoundarayContainer>
   );
 }
 

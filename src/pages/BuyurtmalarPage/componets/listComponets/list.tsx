@@ -274,7 +274,7 @@ export const Listcomponet: React.FC<Listtype> = ({
               `}
             >
               {item.status === "Yangi" ? (
-                <button
+                <Button
                   css={css`
                     display: flex;
                     justify-content: center;
@@ -294,9 +294,9 @@ export const Listcomponet: React.FC<Listtype> = ({
                   }}
                 >
                   <CgClose size={24} />
-                </button>
+                </Button>
               ) : (
-                <button
+                <Button
                   css={css`
                     display: flex;
                     justify-content: center;
@@ -316,10 +316,10 @@ export const Listcomponet: React.FC<Listtype> = ({
                   }}
                 >
                   <CgClose size={24} />
-                </button>
+                </Button>
               )}
               {item.status === "Yopilgan" ? (
-                <button
+                <Button
                   css={css`
                     display: none;
                     justify-content: center;
@@ -338,9 +338,9 @@ export const Listcomponet: React.FC<Listtype> = ({
                   }}
                 >
                   <LuCheck size={24} />
-                </button>
+                </Button>
               ) : (
-                <button
+                <Button
                   css={css`
                     display: flex;
                     justify-content: center;
@@ -359,7 +359,7 @@ export const Listcomponet: React.FC<Listtype> = ({
                   }}
                 >
                   <LuCheck size={24} />
-                </button>
+                </Button>
               )}
             </div>
           </div>

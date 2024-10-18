@@ -996,6 +996,10 @@ const StyledSegmentOption = styled("div")`
     border-radius: 50px 50px 50px 50px !important;
     padding: 7px 10px;
   }
+  .ant-segmented-thumb {
+    border-radius: 50px 50px 50px 50px !important;
+    padding: 7px 10px;
+  }
 `;
 const ScrollList = css`
   height: 87vh;
