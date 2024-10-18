@@ -9,7 +9,6 @@ import { Filiallar } from "./pages/FiliallarPage/Filiallar";
 import { Mijozlar } from "./pages/MijozlarPage/Mijozlar";
 import { Xisobotlar } from "./pages/XisobotlarPage/Xisobot";
 import { Xodimlar } from "./pages/XodimlarPage/Xodimlar";
-import { Provider } from "react-redux";
 import { Xaritalar } from "./pages/XaritalarPage/Xarita";
 import { ErrorBoundarayContainer } from "./pages/Additions/ErorrBoundry/erorrboundy";
 import { NotFound } from "./pages/Additions/NotFound/notFound";
