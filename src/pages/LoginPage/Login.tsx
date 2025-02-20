@@ -1,4 +1,4 @@
-import { Flex, Image, Button, Form, Input, Typography, message } from "antd";
+import { Flex, Button, Form, Input, Typography, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import LoginPoto from "../../Photos/7e031162571d409fd768a6460b131b3b.png";
 
