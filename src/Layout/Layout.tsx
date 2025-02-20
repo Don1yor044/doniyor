@@ -116,6 +116,7 @@ export const Layout = () => {
         width={235}
       >
         <div
+          className="mt-2"
           style={{
             display: "flex",
             gap: 10,
@@ -127,7 +128,7 @@ export const Layout = () => {
             <img
               src={menuPhoto}
               alt="img"
-              className="rounded-full !h-[60px] !w-[60px]"
+              className="rounded-full !h-[60px] !w-[60px] "
             />
           </div>
           <div>
