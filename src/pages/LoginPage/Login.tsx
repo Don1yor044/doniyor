@@ -17,14 +17,14 @@ export function LoginPage() {
   return (
     <Flex style={{ padding: 0, background: "#EDEFF3", height: "100vh" }}>
       <div style={{ width: "60%", height: "100vh" }}>
-        <Image
+        <img
           src={LoginPoto}
           style={{
-            height: "100vh",
+            minHeight: "100vh",
             width: "100%",
             transform: "scaleX(-1) ",
           }}
-          alt=""
+          alt="photo not found"
         />
       </div>
       <div
