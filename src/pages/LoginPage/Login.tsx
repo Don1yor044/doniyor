@@ -15,11 +15,12 @@ export function LoginPage() {
   };
 
   return (
-    <Flex style={{ padding: 0, background: "#EDEFF3" }}>
-      <div style={{ width: "60%" }}>
+    <Flex style={{ padding: 0, background: "#EDEFF3", height: "100vh" }}>
+      <div style={{ width: "60%", height: "100vh" }}>
         <Image
           src={LoginPoto}
           style={{
+            height: "100vh",
             width: "100%",
             transform: "scaleX(-1) ",
           }}

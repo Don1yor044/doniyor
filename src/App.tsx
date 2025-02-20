@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LoginPage } from "./pages/LoginPage/Login";
 import { Layout } from "./Layout/Layout";
 import { Buyurtmalar } from "./pages/BuyurtmalarPage/Buyurtmalar";
@@ -17,13 +17,7 @@ function App() {
     <ErrorBoundarayContainer>
       <BrowserRouter>
         <Routes>
-          <Route
-            element={
-              <Layout>
-                <Outlet />
-              </Layout>
-            }
-          >
+          <Route element={<Layout />}>
             <Route path="*" element={<NotFound />} />
             <Route path="Buyurtmalar" element={<Buyurtmalar />} />
             <Route path="Maxsulotlar" element={<Maxsulotlar />} />

@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import React, { useEffect, useState } from "react";
-import { Menu, Layout as AntLayout, Image, Typography, Button } from "antd";
+import { Menu, Layout as AntLayout, Typography, Button } from "antd";
 
 // photo
 import menuPhoto from "../Photos/07d88f294f383dd96f307e6436c2f55e.jpg";
@@ -15,7 +15,7 @@ import { LuUsers } from "react-icons/lu";
 import { LuBarChart2 } from "react-icons/lu";
 import { IoSettingsOutline } from "react-icons/io5";
 import { RiMapPinLine } from "react-icons/ri";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 const { Sider } = AntLayout;
 
@@ -85,7 +85,7 @@ const pages: {
   },
 ];
 
-export const Layout = ({ children }: { children: React.ReactNode }) => {
+export const Layout = () => {
   const [activePage, setActivePage] = useState<string>("");
 
   const navigate = useNavigate();
@@ -106,7 +106,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <AntLayout style={{ minHeight: "100vh" }}>
+    <AntLayout>
       <Sider
         breakpoint="lg"
         collapsedWidth="0"
@@ -124,9 +124,10 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
           }}
         >
           <div>
-            <Image
+            <img
               src={menuPhoto}
-              style={{ borderRadius: "50%", height: "60px", width: "60px" }}
+              alt="img"
+              className="rounded-full !h-[60px] !w-[60px]"
             />
           </div>
           <div>
@@ -146,14 +147,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
           style={{ marginTop: 20 }}
         >
           <div className="flex">
-            <div
-              style={{
-                background: "#FCB600",
-                width: "5px",
-                height: "348px",
-                marginTop: 4,
-              }}
-            ></div>
+            <div className="bg-[#FCB600] w-[5px] h-[348px] mt-1 rounded-b-sm"></div>
             <div style={{ width: "90%", padding: 0 }}>
               {pages.map((page) => (
                 <Menu.Item
@@ -187,7 +181,8 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
           }}
         >
           <Button
-            className="flex items-center gap-2  "
+            type="text"
+            className="flex items-center gap-2"
             style={{
               boxShadow: "none",
               border: "none",
@@ -202,7 +197,9 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
           </Button>
         </div>
       </Sider>
-      <AntLayout>{children}</AntLayout>
+      <AntLayout className="overflow-y-auto scroll-smooth overscroll-contain">
+        <Outlet />
+      </AntLayout>
     </AntLayout>
   );
 };

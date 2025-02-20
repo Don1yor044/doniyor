@@ -32,23 +32,3 @@ export const updateStatus = async (
     message.error("Statusni o'zgartirishda xatolik.");
   }
 };
-
-// Mijozlarni olish
-export const mijozlarRender = async (setMijozlarData: (data: any) => void) => {
-  try {
-    const res = await axios.get(`https://api_endpoint/mijozlar`);
-    setMijozlarData(res.data);
-  } catch (error) {
-    message.error("Failed to fetch mijozlar data.");
-  }
-};
-
-// Filiallarni olish
-export const filialRender = async (setFilialData: (data: any) => void) => {
-  try {
-    const res = await axios.get(`https://api_endpoint/filial`);
-    setFilialData(res.data);
-  } catch (error) {
-    message.error("Failed to fetch filial data.");
-  }
-};
